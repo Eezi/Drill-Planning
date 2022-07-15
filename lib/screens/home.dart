@@ -11,28 +11,15 @@ class MyTabbedPage extends StatefulWidget {
 }
 
 class _MyTabbedPageState extends State<MyTabbedPage> with SingleTickerProviderStateMixin {
-  static const List<Tab> myTabs = <Tab>[
-    Tab(text: 'Edit'),
-    Tab(text: 'Preview'),
-  ];
-
-  late TabController _tabController;
-  late TextEditingController _textEditingController;
-  QuillController _controller = QuillController.basic();
-
-  
   String text = "";
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: myTabs.length);
-    _textEditingController = TextEditingController();
   }
 
  @override
  void dispose() {
-   _tabController.dispose();
    super.dispose();
  }
 
@@ -52,44 +39,10 @@ class _MyTabbedPageState extends State<MyTabbedPage> with SingleTickerProviderSt
       appBar: AppBar(
         backgroundColor: Colors.black,
         //title: const Text("Markdown Editor", style: TextStyle(color: Colors.white)),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: myTabs,
-        ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          Container(
+      body: Container(
             margin: EdgeInsets.all(20),
-            child: QuillEditor.basic(
-              controller: _controller,
-              readOnly: false, // change to true to be view only mode
-            ),
-            /*child: TextField(
-              controller: _textEditingController,
-              maxLines: null,
-              keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                hintText: "Input Text",
-                border: InputBorder.none,
-              ),
-              onChanged: (String text) {
-                setState(() {
-                  this.text = text;
-                });
-              },
-            ),
-          ),*/
         ),
-          Container(
-            margin: EdgeInsets.all(20),
-            child: Markdown(data: text),
-            // child: Text(text, style: TextStyle(color: Colors.black)),
-          )
-
-        ],
-      ),
     );
   }
 }

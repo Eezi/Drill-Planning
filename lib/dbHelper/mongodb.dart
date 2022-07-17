@@ -20,4 +20,15 @@ class MongoDatabase {
       return Future.error(error);
     }
   }
+
+  static update(Excercise excercise) async {
+    var workout = await workoutsCollection.findOne({"_id": excercise.id});
+    workout["name"] = excercise.name;
+    workout["description"] = excercise.description;
+    await workoutsCollection.save(workout);
+  }
+
+  static delete(Excercise excercise) async {
+    await workoutsCollection.remove(where.id(excercise.id));
+  }
 }

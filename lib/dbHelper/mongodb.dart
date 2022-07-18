@@ -11,6 +11,10 @@ class MongoDatabase {
     workoutsCollection = db.collection(WORKOUT_COLLECTION);
   }
 
+  static createWorkout(Excercise execercise) async {
+    await workoutsCollection.insertAll([execercise.toMap()]);
+  }
+
   static Future<List<Map<String, dynamic>>> getAllWorkouts() async {
     try {
       final workouts = await workoutsCollection.find().toList();
@@ -21,14 +25,14 @@ class MongoDatabase {
     }
   }
 
-  static update(Excercise excercise) async {
+  static updateWorkout(Excercise excercise) async {
     var workout = await workoutsCollection.findOne({"_id": excercise.id});
     workout["name"] = excercise.name;
     workout["description"] = excercise.description;
     await workoutsCollection.save(workout);
   }
 
-  static delete(Excercise excercise) async {
+  static deleteWorkout(Excercise excercise) async {
     await workoutsCollection.remove(where.id(excercise.id));
   }
 }

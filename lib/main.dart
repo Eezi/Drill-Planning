@@ -7,6 +7,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MongoDatabase.connect();
   runApp(
-    MaterialApp(debugShowCheckedModeBanner: false, home: MyTabbedPage()),
+    MaterialApp(debugShowCheckedModeBanner: false, home: HomePage()),
   );
 }

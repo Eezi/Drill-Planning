@@ -6,26 +6,18 @@ import 'package:markdown_app/dbHelper/mongodb.dart';
 import 'package:markdown_app/models/excercise.dart';
 import 'package:markdown_app/screens/add_workout.dart';
 
-class MyTabbedPage extends StatefulWidget {
-  const MyTabbedPage({ Key? key }) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key? key}) : super(key: key);
+
   @override
-  State<MyTabbedPage> createState() => _MyTabbedPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyTabbedPageState extends State<MyTabbedPage> with SingleTickerProviderStateMixin {
-  late TextEditingController _controller;
-  List<String> exercises = [];
-
+class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
   }
-
- @override
- void dispose() {
-   super.dispose();
- }
 
   @override
   Widget build(BuildContext context) {
@@ -54,15 +46,15 @@ class _MyTabbedPageState extends State<MyTabbedPage> with SingleTickerProviderSt
     return Scaffold(
       drawer: DrawerMenu(),
       bottomNavigationBar: BottomMenu(),
-      floatingActionButton:FloatingActionButton( //Floating action button on Scaffold
-          onPressed: () async{
-             final name = await openDialog();
-             if (name == null || name.isEmpty) return;
-             setState(() => this.exercises.add(name));
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+           Navigator.push(context,
+           MaterialPageRoute(builder: (BuildContext context) {
+             return AddWorkoutPage();
+           })).then((value) => setState(() {}));
           },
-          child: Icon(Icons.send), //icon inside button
+        child: Icon(Icons.add),
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -76,7 +68,7 @@ class _MyTabbedPageState extends State<MyTabbedPage> with SingleTickerProviderSt
                         execercise: Excercise.fromMap(snapshot.data[index]),
 
                         onTapDelete: () async {
-                         //_deleteUser(User.fromMap(snapshot.data[index]));
+                         _deleteWorkout(Excercise.fromMap(snapshot.data[index]));
                         },
 
                         onTapEdit: () async {
@@ -103,27 +95,9 @@ class _MyTabbedPageState extends State<MyTabbedPage> with SingleTickerProviderSt
     );
   }
 
-Future openDialog() => showDialog(
-  context: context,
-  builder: (context) => AlertDialog(
-    title: Text("Harjoituksen nimi"),
-    content: TextField(
-      controller: _controller,
-      autofocus: true,
-      decoration: InputDecoration(hintText: 'Lisää harjoituksesi nimi' ),
-    ),
-    actions: [
-      TextButton(
-        child: Text("Lisää"),
-        onPressed: submit,
-      )
-    ]
-  )
-);
-
-  void submit() {
-    Navigator.of(context).pop(_controller.text);
-    _controller.clear();
+  _deleteWorkout(Excercise workout) async {
+    await MongoDatabase.deleteWorkout(workout);
+    setState(() {});
   }
 }
 

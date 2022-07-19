@@ -21,14 +21,13 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
 
   @override
   Widget build(BuildContext context) {
-    Map data = {};
-    data = ModalRoute.of(context)?.settings.arguments as Map;
-    
+    final workout = ModalRoute.of(context)?.settings.arguments as Excercise;
+
     var widgetText = 'Add Workout';
 
-    if (data?.excercise != null) {
-      nameController.text = excercise.name;
-      descriptionController.text = excercise.description;
+    if (workout != null) {
+      nameController.text = workout.name;
+      descriptionController.text = workout.description;
       widgetText = 'Update Workout';
     }
     
@@ -65,10 +64,10 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
               child: ElevatedButton(
                 child: Text(widgetText),
                 onPressed: () {
-                  if (excercise != null) {
-                    //updateUser(user);
+                  if (workout != null) {
+                    updateWorkout(workout);
                   } else {
-                    //insertUser();
+                    insertWorkout();
                   }
                 },
               ),
@@ -77,5 +76,26 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
         ],
       )
     );
+  }
+  void insertWorkout() async {
+    final newWorkout = Excercise(
+      M.ObjectId(),
+      nameController.text,
+      descriptionController.text
+    );
+
+    await MongoDatabase.createWorkout(newWorkout);
+    Navigator.pop(context);
+  }
+
+  void updateWorkout(workout) async {
+    final updatedWorkout = Excercise(
+      workout.id,
+      nameController.text,
+      descriptionController.text,
+    );
+
+    await MongoDatabase.updateWorkout(updatedWorkout);
+    Navigator.pop(context);
   }
 }

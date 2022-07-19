@@ -11,7 +11,7 @@ class ExcerciseCard extends StatelessWidget {
   });
 
   final Excercise execercise;
-  final Function onTapEdit, onTapDelete;
+  final VoidCallback onTapEdit, onTapDelete;
 
   @override
   Widget build(BuildContext context) {

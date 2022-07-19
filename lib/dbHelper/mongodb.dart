@@ -11,7 +11,9 @@ class MongoDatabase {
     workoutsCollection = db.collection(WORKOUT_COLLECTION);
   }
 
-  static createWorkout(Excercise execercise) async {
+  static createWorkout(execercise) async {
+    print("CREATEIN WORKOUT: $execercise");
+    //await workoutsCollection.insertOne(execercise);
     await workoutsCollection.insertAll([execercise.toMap()]);
   }
 
@@ -26,6 +28,7 @@ class MongoDatabase {
   }
 
   static updateWorkout(Excercise excercise) async {
+    print("UPDATEING WORKOUT: $excercise");
     var workout = await workoutsCollection.findOne({"_id": excercise.id});
     workout["name"] = excercise.name;
     workout["description"] = excercise.description;

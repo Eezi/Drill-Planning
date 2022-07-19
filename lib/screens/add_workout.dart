@@ -21,7 +21,7 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
 
   @override
   Widget build(BuildContext context) {
-    final workout = ModalRoute.of(context)?.settings.arguments as Excercise;
+    final workout = ModalRoute.of(context)?.settings.arguments as Excercise?;
 
     var widgetText = 'Add Workout';
 
@@ -83,7 +83,6 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
       nameController.text,
       descriptionController.text
     );
-
     await MongoDatabase.createWorkout(newWorkout);
     Navigator.pop(context);
   }

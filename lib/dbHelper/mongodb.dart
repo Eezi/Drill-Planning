@@ -12,9 +12,7 @@ class MongoDatabase {
   }
 
   static createWorkout(execercise) async {
-    print("CREATEIN WORKOUT: $execercise");
-    //await workoutsCollection.insertOne(execercise);
-    await workoutsCollection.insertAll([execercise.toMap()]);
+    await workoutsCollection.insertOne(execercise.toMap());
   }
 
   static Future<List<Map<String, dynamic>>> getAllWorkouts() async {
@@ -28,7 +26,6 @@ class MongoDatabase {
   }
 
   static updateWorkout(Excercise excercise) async {
-    print("UPDATEING WORKOUT: $excercise");
     var workout = await workoutsCollection.findOne({"_id": excercise.id});
     workout["name"] = excercise.name;
     workout["description"] = excercise.description;

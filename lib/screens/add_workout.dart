@@ -14,6 +14,7 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   List<Intensity> intensityOptions = [Intensity(false, 'Hard'), Intensity(false, 'Medium'), Intensity(false, 'Easy')];
+  bool stateInit = false;
 
   @override
   void dispose() {
@@ -28,16 +29,16 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
     var widgetText = 'Add Workout';
 
     if (workout != null) {
-      print("Muuttaa");
       var intensityIndex = intensityOptions.map((i) => i.label).toList().indexOf(workout.intensity);
 
-      if (intensityIndex >= 0) {
+      if (intensityIndex >= 0 && stateInit == false) {
         intensityOptions[intensityIndex].value = true; 
       }
 
       nameController.text = workout.name;
       descriptionController.text = workout.description;
       widgetText = 'Update Workout';
+      stateInit = true;
     }
     
     return Scaffold(

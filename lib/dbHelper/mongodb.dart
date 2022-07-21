@@ -29,6 +29,7 @@ class MongoDatabase {
     var workout = await workoutsCollection.findOne({"_id": excercise.id});
     workout["name"] = excercise.name;
     workout["description"] = excercise.description;
+    workout["intensity"] = excercise.intensity;
     await workoutsCollection.save(workout);
   }
 

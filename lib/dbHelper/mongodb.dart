@@ -1,6 +1,6 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:markdown_app/dbHelper/constants.dart';
-import 'package:markdown_app/models/excercise.dart';
+import 'package:markdown_app/models/workout.dart';
 
 class MongoDatabase {
   static var db, workoutsCollection;
@@ -11,8 +11,8 @@ class MongoDatabase {
     workoutsCollection = db.collection(WORKOUT_COLLECTION);
   }
 
-  static createWorkout(execercise) async {
-    await workoutsCollection.insertOne(execercise.toMap());
+  static createWorkout(workout) async {
+    await workoutsCollection.insertOne(workout.toMap());
   }
 
   static Future<List<Map<String, dynamic>>> getAllWorkouts() async {
@@ -25,15 +25,15 @@ class MongoDatabase {
     }
   }
 
-  static updateWorkout(Excercise excercise) async {
-    var workout = await workoutsCollection.findOne({"_id": excercise.id});
-    workout["name"] = excercise.name;
-    workout["description"] = excercise.description;
-    workout["intensity"] = excercise.intensity;
-    await workoutsCollection.save(workout);
+  static updateWorkout(Workout workout) async {
+    var workoutToUpdate = await workoutsCollection.findOne({"_id": workout.id});
+    workoutToUpdate["name"] = workout.name;
+    workoutToUpdate["description"] = workout.description;
+    workoutToUpdate["intensity"] = workout.intensity;
+    await workoutsCollection.save(workoutToUpdate);
   }
 
-  static deleteWorkout(Excercise excercise) async {
-    await workoutsCollection.remove(where.id(excercise.id));
+  static deleteWorkout(Workout workout) async {
+    await workoutsCollection.remove(where.id(workout.id));
   }
 }

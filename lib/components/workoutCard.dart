@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:markdown_app/models/excercise.dart';
+import 'package:markdown_app/models/workout.dart';
 
-class ExcerciseCard extends StatelessWidget {
-  //ExcerciseCard(this.execercise, this.onTapDelete, this.onTapEdit);
-  const ExcerciseCard ({
+class WorkoutCard extends StatelessWidget {
+  const WorkoutCard ({
     super.key,
-    required this.execercise,
+    required this.workout,
     required this.onTapEdit,
     required this.onTapDelete,
   });
 
-  final Excercise execercise;
+  final Workout workout;
   final VoidCallback onTapEdit, onTapDelete;
 
   @override
   Widget build(BuildContext context) {
-  bool intensityExists = execercise.intensity != null && execercise.intensity != '';
+  bool intensityExists = workout.intensity != null && workout.intensity != '';
 
     return Material(
       elevation: 2.0,
@@ -28,19 +27,19 @@ class ExcerciseCard extends StatelessWidget {
         child: Text(execercise.intensity[0].toUpperCase()),
       ),*/
       label: Text(
-        execercise.intensity[0].toUpperCase(),
+        workout.intensity[0].toUpperCase(),
         style: TextStyle(
           color: Colors.black,
         ),
       ),
       backgroundColor: 
-      execercise.intensity == 'Hard' ? Colors.red : execercise.intensity == 'Easy' ? Colors.blue : Colors.yellow,
+      workout.intensity == 'Hard' ? Colors.red : workout.intensity == 'Easy' ? Colors.blue : Colors.yellow,
       //elevation: 2.0,
       shadowColor: Colors.grey[60],
       padding: EdgeInsets.all(9.0),
     ) : null,
-        title: Text(execercise.name),
-        subtitle: Text('${execercise.description}'),
+        title: Text(workout.name),
+        subtitle: Text('${workout.description}'),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

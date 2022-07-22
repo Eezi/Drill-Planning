@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:markdown_app/components/drawer.dart';
 import 'package:markdown_app/components/bottomNavigation.dart';
-import 'package:markdown_app/components/excerciseCard.dart';
+import 'package:markdown_app/components/workoutCard.dart';
 import 'package:markdown_app/dbHelper/mongodb.dart';
-import 'package:markdown_app/models/excercise.dart';
+import 'package:markdown_app/models/workout.dart';
 import 'package:markdown_app/screens/add_workout.dart';
 
 class HomePage extends StatefulWidget {
@@ -64,11 +64,11 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: ExcerciseCard(
-                        execercise: Excercise.fromMap(snapshot.data[index]),
+                      child: WorkoutCard(
+                        workout: Workout.fromMap(snapshot.data[index]),
 
                         onTapDelete: () async {
-                         _deleteWorkout(Excercise.fromMap(snapshot.data[index]));
+                         _deleteWorkout(Workout.fromMap(snapshot.data[index]));
                         },
 
                         onTapEdit: () async {
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                                 return AddWorkoutPage();
                               },
                               settings: RouteSettings(
-                                arguments: Excercise.fromMap(snapshot.data[index]),
+                                arguments: Workout.fromMap(snapshot.data[index]),
                               ),
                             ),
                           ).then((value) => setState(() {}));
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _deleteWorkout(Excercise workout) async {
+  _deleteWorkout(Workout workout) async {
     await MongoDatabase.deleteWorkout(workout);
     setState(() {});
   }

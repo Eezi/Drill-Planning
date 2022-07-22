@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:markdown_app/dbHelper/mongodb.dart';
-import 'package:markdown_app/models/excercise.dart';
+import 'package:markdown_app/models/workout.dart';
 import 'package:markdown_app/models/intensity.dart';
-import 'dart:convert';
 
 class AddWorkoutPage extends StatefulWidget {
   @override
@@ -25,13 +24,13 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
 
   @override
   Widget build(BuildContext context) {
-    final workout = ModalRoute.of(context)?.settings.arguments as Excercise?;
+    final workout = ModalRoute.of(context)?.settings.arguments as Workout?;
     var widgetText = 'Add Workout';
 
-    if (workout != null) {
+    if (workout != null && stateInit == false) {
       var intensityIndex = intensityOptions.map((i) => i.label).toList().indexOf(workout.intensity);
 
-      if (intensityIndex >= 0 && stateInit == false) {
+      if (intensityIndex >= 0) {
         intensityOptions[intensityIndex].value = true; 
       }
 
@@ -70,7 +69,6 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
                 onPressed: (int index) {
                 setState(() {
                   for (int buttonIndex = 0; buttonIndex < intensityOptions.length; buttonIndex++) {
-                    print("value ${intensityOptions[buttonIndex].value} ");
                    if (buttonIndex == index) {
                     intensityOptions[buttonIndex].value = true;
                   } else {
@@ -106,8 +104,8 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
   }
   void insertWorkout() async {
     var selectedIntensity = intensityOptions.firstWhere((i) => i.value == true).label;
-    print("CREATE: $selectedIntensity");
-    final newWorkout = Excercise(
+
+    final newWorkout = Workout(
       M.ObjectId(),
       nameController.text,
       descriptionController.text,
@@ -119,9 +117,8 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
 
   void updateWorkout(workout) async {
     var selectedIntensity = intensityOptions.firstWhere((i) => i.value == true).label;
-    print("UPDATE: $selectedIntensity");
 
-    final updatedWorkout = Excercise(
+    final updatedWorkout = Workout(
       workout.id,
       nameController.text,
       descriptionController.text,

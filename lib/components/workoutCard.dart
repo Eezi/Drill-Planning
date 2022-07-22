@@ -20,24 +20,23 @@ class WorkoutCard extends StatelessWidget {
       elevation: 2.0,
       color: Colors.white,
       child: ListTile(
-        leading: intensityExists ? Chip(
-      labelPadding: EdgeInsets.all(3.0),
-      /*avatar: CircleAvatar(
-        backgroundColor: Colors.white70,
-        child: Text(execercise.intensity[0].toUpperCase()),
-      ),*/
-      label: Text(
-        workout.intensity[0].toUpperCase(),
-        style: TextStyle(
-          color: Colors.black,
-        ),
-      ),
-      backgroundColor: 
-      workout.intensity == 'Hard' ? Colors.red : workout.intensity == 'Easy' ? Colors.blue : Colors.yellow,
-      //elevation: 2.0,
-      shadowColor: Colors.grey[60],
-      padding: EdgeInsets.all(9.0),
-    ) : null,
+        leading: intensityExists ? CircleAvatar(
+            radius: 17,
+            backgroundColor: workout.intensity == 'Hard' ? Colors.red : workout.intensity == 'Easy' ? Colors.blue : Colors.yellow,
+            child: CircleAvatar(
+                  radius: 15,
+                  backgroundColor: workout.intensity == 'Hard' ? Color.fromARGB(255, 254, 192, 192) : workout.intensity == 'Easy' ? Color.fromARGB(255, 201, 234, 249)
+                  : Color.fromARGB(255, 255, 255, 194),
+                  child: Text(
+                  workout.intensity[0].toUpperCase(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+
+              ),
+      ) : null,
         title: Text(workout.name),
         subtitle: Text('${workout.description}'),
         trailing: Column(

@@ -5,6 +5,7 @@ import 'package:markdown_app/components/workoutCard.dart';
 import 'package:markdown_app/dbHelper/mongodb.dart';
 import 'package:markdown_app/models/workout.dart';
 import 'package:markdown_app/screens/add_workout.dart';
+import 'package:markdown_app/api/user_service.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);

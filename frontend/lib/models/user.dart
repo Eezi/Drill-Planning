@@ -2,23 +2,23 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 class User {
   final ObjectId id;
-  final String name;
   final String email;
+  final String password;
 
-  const User({
-    required this.id,
-    required this.name,
-    required this.email,
-  });
+  const User(
+    this.id,
+    this.email,
+    this.password,
+  );
 
   User.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        name = json['name'],
-        email = json['email'];
+        email = json['email'],
+        password = json['password'];
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'name': name,
         'email': email,
-      };
+        'password': password,
+  };
 }
